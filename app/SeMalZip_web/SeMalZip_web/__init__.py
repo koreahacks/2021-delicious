@@ -57,6 +57,10 @@ class Post(db.Model):
 def home():
     return render_template('index.html')
 
+@app.route("/search")
+def search():
+    return render_template('search.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     return render_template('login.html')
