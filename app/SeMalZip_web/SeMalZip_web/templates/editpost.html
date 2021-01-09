@@ -9,47 +9,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/editpost.css">
+    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+    <script src="../static/js/jquery-2.1.0.min.js"></script>
+    <script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js"></script>
 </head>
 
 <body>
     <div id="form_wrapper">
-        <form action="/editpost" method="POST">
-            <input type="file" name="image" multiple="multiple">
+        <form action="/editpost" method="POST" enctype="multipart/form-data">
+            <input type="file" name="please[]" multiple="multiple">
+            <input type="text" name="fuck">
+            <input type="file" name="fuckthis">
             <input type="text" name="title">
+            <input type="text" name="oneline">
             <textarea name="article">
             </textarea>
             <legend>가성비</legend>
-            <input type="radio" name="cat_money" value="1">
+            <input type="radio" name="cat_money" value="1" checked="checked">
             <input type="radio" name="cat_money" value="2">
             <input type="radio" name="cat_money" value="3">
             <input type="radio" name="cat_money" value="4">
             <input type="radio" name="cat_money" value="5">
             <legend>편의시설</legend>
-            <input type="radio" name="cat_easy" value="1">
+            <input type="radio" name="cat_easy" value="1" checked="checked">
             <input type="radio" name="cat_easy" value="2">
             <input type="radio" name="cat_easy" value="3">
             <input type="radio" name="cat_easy" value="4">
             <input type="radio" name="cat_easy" value="5">
             <legend>안전</legend>
-            <input type="radio" name="cat_safe" value="1">
+            <input type="radio" name="cat_safe" value="1" checked="checked">
             <input type="radio" name="cat_safe" value="2">
             <input type="radio" name="cat_safe" value="3">
             <input type="radio" name="cat_safe" value="4">
             <input type="radio" name="cat_safe" value="5">
             <legend>넓이</legend>
-            <input type="radio" name="cat_space" value="1">
+            <input type="radio" name="cat_space" value="1" checked="checked">
             <input type="radio" name="cat_space" value="2">
             <input type="radio" name="cat_space" value="3">
             <input type="radio" name="cat_space" value="4">
             <input type="radio" name="cat_space" value="5">
             <legend>내부시설</legend>
-            <input type="radio" name="cat_facility" value="1">
+            <input type="radio" name="cat_facility" value="1" checked="checked">
             <input type="radio" name="cat_facility" value="2">
             <input type="radio" name="cat_facility" value="3">
             <input type="radio" name="cat_facility" value="4">
             <input type="radio" name="cat_facility" value="5">
             <legend>집주인</legend>
-            <input type="radio" name="cat_god" value="1">
+            <input type="radio" name="cat_god" value="1" checked="checked">
             <input type="radio" name="cat_god" value="2">
             <input type="radio" name="cat_god" value="3">
             <input type="radio" name="cat_god" value="4">
@@ -58,6 +64,60 @@
             <button type="submit">작성하기</button>
         </form>
     </div>
+    <canvas id="myChart" style="display:block; width:300px; height:300px;" width="100px" height="100px"></canvas>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var randomScalingFactor = function() {
+            return Math.round(Math.random() * 100);
+        };
+
+        function generate_chart() {
+            var color = Chart.helpers.color;
+            var config = {
+                type: 'radar',
+                data: {
+                    labels: [
+                        "가성비", "편의시설", "안전", "공간", "내부시설", "건물주"
+                    ],
+                    datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                        borderColor: window.chartColors.red,
+                        pointBackgroundColor: window.chartColors.red,
+                        data: [
+                            $('input[name="cat_money"]:checked').val(),
+                            $('input[name="cat_easy"]:checked').val(),
+                            $('input[name="cat_safe"]:checked').val(),
+                            $('input[name="cat_space"]:checked').val(),
+                            $('input[name="cat_facility"]:checked').val(),
+                            $('input[name="cat_god"]:checked').val()
+                        ]
+                    }]
+                },
+                options: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        // display: true,
+                        // text: 'Chart.js Radar Chart'
+                    },
+                    scale: {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+            window.myRadar = new Chart(ctx, config);
+        }
+
+        $("input[type='radio']").change(function() {
+            generate_chart();
+        });
+    </script>
+
 </body>
 
 </html>

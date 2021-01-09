@@ -13,7 +13,7 @@ from urllib.parse import unquote
 # 웹 서버 생성하기
 app = Flask(__name__)
 
-UPLOAD_DIR = "\static\profile_image"
+UPLOAD_DIR = "\static\room_image"
 app.config['SECRET_KEY'] = 'delicious_flask'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
@@ -54,6 +54,7 @@ class Review(db.Model):
     __table_name__ = 'review'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), unique = True, nullable=False)
+    oneline = db.Column(db.String(120), unique = True, nullable=False)
     content = db.Column(db.Text)
     date_posted = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -65,11 +66,15 @@ class Review(db.Model):
     cat_facility = db.Column(db.Integer)
     cat_god = db.Column(db.Integer)
 
-    image_data = db.Column(db.String(256))
+    image_source_first = db.Column(db.String(100))
+    image_source_second = db.Column(db.String(100))
+    image_source_third = db.Column(db.String(100))
 
-    def __init__(self, title, content, data_posted, user_id, cat_money, cat_easy, cat_safe, cat_space, cat_facility, cat_god, image_data, **kwargs):
+
+    def __init__(self, title, oneline, content, data_posted, user_id, cat_money, cat_easy, cat_safe, cat_space, cat_facility, cat_god, image_source_first, image_source_second, image_source_third, **kwargs):
         self.title = title
         self.content = content
+        self.oneline = oneline
         self.data_posted = data_posted
         self.user_id = user_id
         
@@ -80,7 +85,9 @@ class Review(db.Model):
         self.cat_facility = cat_facility
         self.cat_god = cat_god
 
-        self.image_data = image_data
+        self.image_source_first = image_source_first
+        self.image_source_second = image_source_second
+        self.image_source_third = image_source_third
 
     def __repr__(self):
         return f"<Review('{self.id}', '{self.title}')>"
@@ -169,8 +176,13 @@ def edit_post():
     if request.method == "GET" :
         return render_template('editpost.html')
     else:
+        for key in request.form:
+            print(key, request.form[key])
+        for key in request.files:
+            print(key, request.files[key])
         username = session['username']
         title = request.form['title']
+        oneline = request.form['oneline']
         article = request.form['article']
 
         cat_money = request.form['cat_money']
@@ -181,13 +193,35 @@ def edit_post():
         cat_god = request.form['cat_god']
 
         author = User.query.filter_by(username=username).first()
-        image_data=""
-        uploaded_image = request.files.getlist("image")
-        for image in uploaded_image :
-            f = image
-            f.save(secure_filename(f.filename))
-            image_data += f.filename+", " 
-        new_post = Review(title=title, content=article, author=author, cat_money=cat_money, cat_easy=cat_easy, cat_safe=cat_safe, cat_space=cat_space, cat_facility=cat_facility, cat_god=cat_god, image_data=image_data, data_posted=datetime.datetime, user_id=author.id)
+        files = request.files.getlist('please[]')
+        image_directory = []
+        print(files)
+        cnt=0
+        for image in files:
+            directory = os.path.join("static/room_image/", secure_filename(title+'_'+str(cnt)+".jpg"))
+            file_save_dir = os.path.join("SeMalZip_web/", directory)
+            cnt+=1
+            print(directory)
+            image.save(file_save_dir)
+            image_directory.append(directory)
+        
+        try:
+            first_img = image_directory[0]
+        except:
+            directory = os.path.join("static/room_image/", "default.png")
+            first_img = directory
+        try:
+            second_img = image_directory[1]
+        except:
+            directory = os.path.join("static/room_image/", "default.png")
+            second_img = directory
+        try:
+            third_img = image_directory[2]
+        except:
+            directory = os.path.join("static/room_image/", "default.png")
+            third_img = directory
+
+        new_post = Review(title=title, oneline=oneline, content=article, author=author, cat_money=cat_money, cat_easy=cat_easy, cat_safe=cat_safe, cat_space=cat_space, cat_facility=cat_facility, cat_god=cat_god, data_posted=datetime.datetime, user_id=author.id, image_source_first=first_img, image_source_second=second_img, image_source_third=third_img)
 
         try: 
             db.session.add(new_post)

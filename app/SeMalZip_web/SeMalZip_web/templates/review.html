@@ -13,7 +13,7 @@
             </div>
             <div class="offset-lg-3 col-lg-6">
                 <div class="center-text">
-                    {{ rarticle.content }}
+                    {{ rarticle.oneline }}
                 </div>
             </div>
         </div>
@@ -24,8 +24,10 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="team-item">
                     <div class="team-content">
-                        <i><img src="../static/images/testimonial-icon.png" alt=""></i>
-                        <!-- 여기에 점수 차트 넣으면 댐-->
+                        <!-------------------------------------------------- 점수 차트 시작---------------------------------------------------->
+                        <canvas id="myChart" style="display:block; width:300px; height:300px;" width="100px" height="100px"></canvas>
+
+                        <!-------------------------------------------------- 점수 차트 끝---------------------------------------------------->
                     </div>
                 </div>
             </div>
@@ -45,7 +47,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="team-item">
                     <div class="team-content">
-                        <i><img src="../static/images/post1_img1.png" alt=""></i>
+                        <i><img src="{{ rarticle.image_source_first }}" alt=""></i>
                     </div>
                 </div>
             </div>
@@ -54,7 +56,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="team-item">
                     <div class="team-content">
-                        <i><img src="../static/images/post1_img2.png" alt=""></i>
+                        <i><img src="{{ rarticle.image_source_second }}" alt=""></i>
                     </div>
                 </div>
             </div>
@@ -63,7 +65,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="team-item">
                     <div class="team-content">
-                        <i><img src="../static/images/post1_img2.png" alt=""></i>
+                        <i><img src="{{ rarticle.image_source_third }}" alt=""></i>
                     </div>
                 </div>
             </div>
@@ -73,4 +75,69 @@
     </div>
 </section>
 <!-- ***** Testimonials End ***** -->
+<input type="hidden" id="value_cat_money" value="{{ rarticle.cat_money }}" />
+<input type="hidden" id="value_cat_easy" value="{{ rarticle.cat_easy }}" />
+<input type="hidden" id="value_cat_safe" value="{{ rarticle.cat_safe }}" />
+<input type="hidden" id="value_cat_facility" value="{{ rarticle.cat_facility }}" />
+<input type="hidden" id="value_cat_space" value="{{ rarticle.cat_space }}" />
+<input type="hidden" id="value_cat_god" value="{{ rarticle.cat_god }}" />
+
+
+
+<script src=" https://www.chartjs.org/samples/latest/utils.js "></script>
+<script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js "></script>
+<!-- jQuery -->
+<script src="../static/js/jquery-2.1.0.min.js "></script>
+
+<!-- Bootstrap -->
+<script src="../static/js/popper.js "></script>
+<script src="../static/js/bootstrap.min.js "></script>
+
+<!-- Plugins -->
+<script src="../static/js/scrollreveal.min.js "></script>
+<script src="../static/js/waypoints.min.js "></script>
+<script src="../static/js/jquery.counterup.min.js "></script>
+<script src="../static/js/imgfix.min.js "></script>
+
+<!-- Global Init -->
+<script src="../static/js/custom.js "></script>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var color = Chart.helpers.color;
+    var config = {
+        type: 'radar',
+        data: {
+            labels: [
+                '기준',
+                '가성비',
+                '주변 시설',
+                '안전',
+                '공간',
+                '내부 시설',
+                '집주인',
+            ],
+            datasets: [{
+                backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+                borderColor: window.chartColors.blue,
+                pointBackgroundColor: window.chartColors.blue,
+                data: [
+                    0,
+                    $("#value_cat_money").val(),
+                    $("#value_cat_easy").val(),
+                    $("#value_cat_safe").val(),
+                    $("#value_cat_facility").val(),
+                    $("#value_cat_space").val(),
+                    $("#value_cat_god").val()
+                ]
+            }]
+        }
+    };
+
+    window.onload = function() {
+        window.myRadar = new Chart(ctx, config);
+    };
+</script>
+
 {% endblock %}
