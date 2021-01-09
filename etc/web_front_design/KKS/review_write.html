@@ -99,6 +99,39 @@
                     <div class="contact-form">
                         <form id="contact" action="" method="get">
                           <div class="row">
+                              <!-- 세장만 -->
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <p>사진은 3장까지 첨부할 수 있습니다.</p>
+                              </div>
+<!-- *****  썸네일  ***** -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                              <label class="custom-file-upload">
+                                <input type="file" id="image" accept="image/*" onchange="setThumbnail(event);" multiple />
+                              
+                              </label>
+                              <div id="image_container"></div>
+                              <fieldset>
+                                  <script>
+                                function setThumbnail(event) {
+                                  for (var image of event.target.files) {
+                                    var reader = new FileReader();
+                                    reader.onload = function (event) {
+                                      var img = document.createElement("img");
+                                      img.setAttribute("src", event.target.result);
+                                      document.querySelector("div#image_container").appendChild(img);
+                                    };
+                                    console.log(image);
+                                    reader.readAsDataURL(image);
+                                  }
+                                }
+                                
+                               </script>
+                               </fieldset>
+                            </div>
+                              <!-- ***** 다음줄 ***** -->
+                              
+                            
+                            <!-- ***** 제목 ***** -->
                             <div class="col-lg-4 col-md-12 col-sm-12">
                               <fieldset>
                                 <input name="name" type="text" class="form-control" id="name" placeholder="제목" required="">
@@ -115,22 +148,7 @@
                                 <textarea name="message" rows="6" class="form-control" id="message" placeholder="자세한 후기를 여기에 들려주세요~" required=""></textarea>
                               </fieldset>
                             </div>
-                            <!-- ***** 다음줄 ***** -->
-                            <div class="col-lg-4 col-md-12 col-sm-12">
-                                <fieldset>
-                                  <input name="name" type="text" class="form-control" id="name" placeholder="사진1" required="">
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-4 col-md-12 col-sm-12">
-                                <fieldset>
-                                  <input name="name" type="text" class="form-control" id="name" placeholder="사진2" required="">
-                                </fieldset>
-                            </div>
-                            <div class="col-lg-4 col-md-12 col-sm-12">
-                                <fieldset>
-                                  <input name="name" type="text" class="form-control" id="name" placeholder="사진3" required="">
-                                </fieldset>
-                            </div>
+                      
                             <!-- ***** 다음줄 ***** -->
                             <div class="col-lg-6 col-md-12 col-sm-12">
                                 <fieldset>
