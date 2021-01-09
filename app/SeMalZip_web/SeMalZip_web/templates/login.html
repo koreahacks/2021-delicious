@@ -33,16 +33,16 @@
 
     <div class="login-page">
         <div class="form">
-            <form class="login-form" method="POST">
-                <a href="index.html" class="logo">
+            <form class="login-form" action="login" method="POST">
+                <a href="{{ url_for('home') }}" class="logo">
                     <img src="../static/images/login-logo.png" alt="Softy Pinko" />
                 </a>
                 <p>
                     <p>
-                        <input type="text" placeholder="아이디" />
-                        <input type="password" placeholder="비밀번호" />
-                        <button>로그인</button>
-                        <p class="message">계정이 없으신가요? <a href="signup.html">회원가입하기</a></p>
+                        <input type="text" name="username" placeholder="아이디" />
+                        <input type="password" name="password" placeholder="비밀번호" />
+                        <button type="submit">로그인</button>
+                        <p class="message">계정이 없으신가요? <a href="{{ url_for('signup') }}">회원가입하기</a></p>
             </form>
         </div>
     </div>
