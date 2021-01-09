@@ -1,123 +1,273 @@
-<!DOCTYPE html>
-<html lang="en">
+ {% extends 'layout.html' %} {% block content %}
+<section class="section colored" id="contact-us">
+    <div class="container">
+        <!-- ***** Section Title Start ***** -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="center-heading">
+                    <h2 class="section-title">후기 작성하기</h2>
+                </div>
+            </div>
+            <div class="offset-lg-3 col-lg-6">
+                <div class="center-text">
+                    <p>직접 살면서 느낀 생생한 후기를 작성해 보세요!</p>
+                </div>
+            </div>
+        </div>
+        <!-- ***** Section Title End ***** -->
 
-<head>
-    <meta charset="utf-8">
-    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
-    <!--  All snippets are MIT license http://bootdey.com/license -->
-    <title>review</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/editpost.css">
-    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
-    <script src="../static/js/jquery-2.1.0.min.js"></script>
-    <script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js"></script>
-</head>
+        <div class="row">
+            <!-- ***** Contact Text Start ***** -->
 
-<body>
-    <div id="form_wrapper">
-        <form action="/editpost" method="POST" enctype="multipart/form-data">
-            <input type="file" name="please[]" multiple="multiple">
-            <input type="text" name="fuck">
-            <input type="file" name="fuckthis">
-            <input type="text" name="title">
-            <input type="text" name="oneline">
-            <textarea name="article">
-            </textarea>
-            <legend>가성비</legend>
-            <input type="radio" name="cat_money" value="1" checked="checked">
-            <input type="radio" name="cat_money" value="2">
-            <input type="radio" name="cat_money" value="3">
-            <input type="radio" name="cat_money" value="4">
-            <input type="radio" name="cat_money" value="5">
-            <legend>편의시설</legend>
-            <input type="radio" name="cat_easy" value="1" checked="checked">
-            <input type="radio" name="cat_easy" value="2">
-            <input type="radio" name="cat_easy" value="3">
-            <input type="radio" name="cat_easy" value="4">
-            <input type="radio" name="cat_easy" value="5">
-            <legend>안전</legend>
-            <input type="radio" name="cat_safe" value="1" checked="checked">
-            <input type="radio" name="cat_safe" value="2">
-            <input type="radio" name="cat_safe" value="3">
-            <input type="radio" name="cat_safe" value="4">
-            <input type="radio" name="cat_safe" value="5">
-            <legend>넓이</legend>
-            <input type="radio" name="cat_space" value="1" checked="checked">
-            <input type="radio" name="cat_space" value="2">
-            <input type="radio" name="cat_space" value="3">
-            <input type="radio" name="cat_space" value="4">
-            <input type="radio" name="cat_space" value="5">
-            <legend>내부시설</legend>
-            <input type="radio" name="cat_facility" value="1" checked="checked">
-            <input type="radio" name="cat_facility" value="2">
-            <input type="radio" name="cat_facility" value="3">
-            <input type="radio" name="cat_facility" value="4">
-            <input type="radio" name="cat_facility" value="5">
-            <legend>집주인</legend>
-            <input type="radio" name="cat_god" value="1" checked="checked">
-            <input type="radio" name="cat_god" value="2">
-            <input type="radio" name="cat_god" value="3">
-            <input type="radio" name="cat_god" value="4">
-            <input type="radio" name="cat_god" value="5">
-            <br>
-            <button type="submit">작성하기</button>
-        </form>
+            <!-- ***** Contact Text End ***** -->
+
+            <!-- ***** Contact Form Start ***** -->
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="contact-form">
+                    <form id="contact" action="/editpost" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <fieldset>
+                                    <input name="title" type="text" class="form-control" id="name" placeholder="제목" required="">
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-8 col-md-12 col-sm-12">
+                                <fieldset>
+                                    <input name="oneline" type="text" class="form-control" id="email" placeholder="한줄요약!" required="">
+                                </fieldset>
+                            </div>
+                            <!-- ***** 다음줄 ***** -->
+                            <div class="col-lg-12">
+                                <fieldset>
+                                    <textarea name="article" rows="6" class="form-control" id="message" placeholder="자세한 후기를 여기에 들려주세요~" required=""></textarea>
+                                </fieldset>
+                            </div>
+                            <!-- ***** 다음줄 ***** -->
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <fieldset>
+                                    <input name="image1" type="file" class="form-control" id="name" placeholder="사진1" required="">
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <fieldset>
+                                    <input name="image2" type="file" class="form-control" id="name" placeholder="사진2" required="">
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <fieldset>
+                                    <input name="image3" type="file" class="form-control" id="name" placeholder="사진3" required="">
+                                </fieldset>
+                            </div>
+                            <!-- ***** 다음줄 ***** -->
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <fieldset>
+                                    <input name="address" type="text" class="form-control" id="name" placeholder="주소" required="">
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12">
+                                <fieldset>
+                                    <input name="payment" type="text" class="form-control" id="name" placeholder="가격" required="">
+                                </fieldset>
+                            </div>
+                            <!-- ***** 다음줄 ***** -->
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <fieldset>
+
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="team-item">
+                                    <div class="team-content">
+                                        <!-------------------------------------------------- 점수 차트 시작---------------------------------------------------->
+                                        <canvas id="myChart" style="display:block; width:300px; height:300px;" width="100px" height="100px"></canvas>
+
+                                        <!-------------------------------------------------- 점수 차트 끝---------------------------------------------------->
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="team-item">
+                                    <div class="team-content" style="padding:10px; padding-left:30px; padding-top:20px">
+                                        <div class='starrr' id='star1'>가격 </div>
+                                        <span class='your-choice-was1' style='display: none;'></span>
+                                        <span class='choice1'></span><br/>
+
+                                        <div class='starrr' id='star2'>편의 시설 </div>
+                                        <span class='your-choice-was2' style='display: none;'></span>
+                                        <span class='choice2'></span><br/>
+
+                                        <div class='starrr' id='star3'>안전 </div>
+                                        <span class='your-choice-was3' style='display: none;'></span>
+                                        <span class='choice3'></span><br/>
+
+                                        <div class='starrr' id='star4'>공간 </div>
+                                        <span class='your-choice-was4' style='display: none;'></span>
+                                        <span class='choice4'></span><br/>
+
+                                        <div class='starrr' id='star5'>내부 시설 </div>
+                                        <span class='your-choice-was5' style='display: none;'></span>
+                                        <span class='choice5'></span><br/>
+
+                                        <div class='starrr' id='star6'>집주인 </div>
+                                        <span class='your-choice-was6' style='display: none;'></span>
+                                        <span class='choice6'></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- ***** 다음줄 ***** -->
+                            <div class="col-lg-12">
+                                <fieldset>
+                                    <button type="submit" id="form-submit" class="main-button mb-5">작성하기</button>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <fieldset>
+                            <input type="hidden" name="cat_money" value="0">
+                            <input type="hidden" name="cat_easy" value="0">
+                            <input type="hidden" name="cat_safe" value="0">
+                            <input type="hidden" name="cat_space" value="0">
+                            <input type="hidden" name="cat_facility" value="0">
+                            <input type="hidden" name="cat_god" value="0">
+                        </fieldset>
+                        <!-- ***** 차트 끝 ***** -->
+                        <!-- ***** 별 시작 ***** -->
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                            <div class="container">
+
+
+                                <br/>
+
+                                </span>
+                                <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+                                <script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js"></script>
+
+                                <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+                                <script src="../static/js/starrr.js"></script>
+
+                                <script>
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    $('#star1').starrr({
+                                        change: function(e, value) {
+                                            if (value) {
+                                                $('.your-choice-was1').show();
+                                                $('input[name="cat_money"]').val(value);
+                                                console.log(value);
+                                                renew_chart();
+                                            } else {
+                                                $('.your-choice-was1').hide();
+                                            }
+                                        }
+
+                                    });
+
+                                    $('#star2').starrr({
+                                        change: function(e, value) {
+                                            if (value) {
+                                                $('.your-choice-was2').show();
+                                                $('input[name="cat_easy"]').val(value);
+                                                renew_chart();
+                                            } else {
+                                                $('.your-choice-was2').hide();
+                                            }
+                                        }
+                                    });
+
+                                    $('#star3').starrr({
+                                        change: function(e, value) {
+                                            if (value) {
+                                                $('.your-choice-was3').show();
+                                                $('input[name="cat_safe"]').val(value);
+                                                renew_chart();
+                                            } else {
+                                                $('.your-choice-was3').hide();
+                                            }
+                                        }
+                                    });
+
+                                    $('#star4').starrr({
+                                        change: function(e, value) {
+                                            if (value) {
+                                                $('.your-choice-was4').show();
+                                                $('input[name="cat_space"]').val(value);
+                                                renew_chart();
+                                            } else {
+                                                $('.your-choice-was4').hide();
+                                            }
+                                        }
+                                    });
+
+                                    $('#star5').starrr({
+                                        change: function(e, value) {
+                                            if (value) {
+                                                $('.your-choice-was5').show();
+                                                $('input[name="cat_facility"]').val(value);
+                                                renew_chart();
+
+                                            } else {
+                                                $('.your-choice-was5').hide();
+                                            }
+                                        }
+                                    });
+
+                                    $('#star6').starrr({
+                                        change: function(e, value) {
+                                            if (value) {
+                                                $('.your-choice-was6').show();
+                                                $('input[name="cat_god"]').val(value);
+                                                renew_chart();
+                                            } else {
+                                                $('.your-choice-was6').hide();
+                                            }
+                                        }
+                                    });
+
+                                    function renew_chart() {
+                                        generate_chart();
+                                    }
+
+                                    function generate_chart() {
+                                        var color = Chart.helpers.color;
+                                        var config = {
+                                            type: 'radar',
+                                            data: {
+                                                labels: [
+                                                    "가성비", "편의시설", "안전", "공간", "내부시설", "건물주"
+                                                ],
+                                                datasets: [{
+                                                    label: 'My First dataset',
+                                                    backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                                                    borderColor: window.chartColors.red,
+                                                    pointBackgroundColor: window.chartColors.red,
+                                                    data: [
+                                                        $('input[name="cat_money"]').val(),
+                                                        $('input[name="cat_easy"').val(),
+                                                        $('input[name="cat_safe"]').val(),
+                                                        $('input[name="cat_space"]').val(),
+                                                        $('input[name="cat_facility"]').val(),
+                                                        $('input[name="cat_god"]').val()
+                                                    ]
+                                                }]
+                                            }
+                                        };
+                                        window.myRadar = new Chart(ctx, config);
+
+                                    }
+
+                                    $("input[type='hidden']").change(function() {
+                                        generate_chart();
+                                    });
+                                </script>
+                                <!-- ***** 별 끝 차트 시작 ***** -->
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <canvas id="myChart" style="display:block; width:300px; height:300px;" width="100px" height="100px"></canvas>
-    <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-
-        var randomScalingFactor = function() {
-            return Math.round(Math.random() * 100);
-        };
-
-        function generate_chart() {
-            var color = Chart.helpers.color;
-            var config = {
-                type: 'radar',
-                data: {
-                    labels: [
-                        "가성비", "편의시설", "안전", "공간", "내부시설", "건물주"
-                    ],
-                    datasets: [{
-                        label: 'My First dataset',
-                        backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
-                        borderColor: window.chartColors.red,
-                        pointBackgroundColor: window.chartColors.red,
-                        data: [
-                            $('input[name="cat_money"]:checked').val(),
-                            $('input[name="cat_easy"]:checked').val(),
-                            $('input[name="cat_safe"]:checked').val(),
-                            $('input[name="cat_space"]:checked').val(),
-                            $('input[name="cat_facility"]:checked').val(),
-                            $('input[name="cat_god"]:checked').val()
-                        ]
-                    }]
-                },
-                options: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        // display: true,
-                        // text: 'Chart.js Radar Chart'
-                    },
-                    scale: {
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            };
-            window.myRadar = new Chart(ctx, config);
-        }
-
-        $("input[type='radio']").change(function() {
-            generate_chart();
-        });
-    </script>
-
-</body>
-
-</html>
+</section>
+{% endblock %}

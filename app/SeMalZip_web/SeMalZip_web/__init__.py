@@ -5,6 +5,7 @@ from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from SeMalZip_web import namespace
+from flask_socketio import SocketIO
 
 import datetime, base64
 import sys, os, shutil
@@ -17,7 +18,7 @@ UPLOAD_DIR = "\static\room_image"
 app.config['SECRET_KEY'] = 'delicious_flask'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
-
+socketio = SocketIO(app)
 
 
 db = SQLAlchemy(app)
@@ -102,18 +103,24 @@ def home():
 def search():
     review_list = Review.query.all()
     category = request.args.get("cat", "keyword")
-    if category is "money":
+    if category == "money":
         review_list = Review.query.order_by(Review.cat_money.desc())
-    elif category is "easy" :
+    
+    elif category == "easy" :
         review_list = Review.query.order_by(Review.cat_easy.desc())
-    elif category is "safe" :
+       
+    elif category == "safe" :
         review_list = Review.query.order_by(Review.cat_safe.desc())
-    elif category is "space" :
+       
+    elif category == "space" :
         review_list = Review.query.order_by(Review.cat_space.desc())
-    elif category is "facility" :
+       
+    elif category == "facility" :
         review_list = Review.query.order_by(Review.cat_facility.desc())
-    elif category is "god" :
+       
+    elif category == "god" :
         review_list = Review.query.order_by(Review.cat_god.desc())
+    
     return render_template('search.html', list=review_list)
 
 @app.route("/review")
@@ -127,18 +134,15 @@ def login():
     if request.method == "GET":
         return render_template('login.html')
     else :
-        print(request)
         username = request.form['username']
         password = request.form['password']
         data = User.query.filter_by(username=username).first()
-        print(data, User.check_password(data, data.password))
         if User.check_password(data, password) is True:
             session['logged_in'] = True
             session['username'] = username
             print('login success')
             return redirect(url_for('home'))
         else:
-            print('login fail', username, password)
             return redirect(url_for('login'))
     # email = request.form['email']
     # passw = request.form['password']
@@ -176,10 +180,6 @@ def edit_post():
     if request.method == "GET" :
         return render_template('editpost.html')
     else:
-        for key in request.form:
-            print(key, request.form[key])
-        for key in request.files:
-            print(key, request.files[key])
         username = session['username']
         title = request.form['title']
         oneline = request.form['oneline']
@@ -193,33 +193,27 @@ def edit_post():
         cat_god = request.form['cat_god']
 
         author = User.query.filter_by(username=username).first()
-        files = request.files.getlist('please[]')
-        image_directory = []
-        print(files)
-        cnt=0
-        for image in files:
-            directory = os.path.join("static/room_image/", secure_filename(title+'_'+str(cnt)+".jpg"))
-            file_save_dir = os.path.join("SeMalZip_web/", directory)
-            cnt+=1
-            print(directory)
-            image.save(file_save_dir)
-            image_directory.append(directory)
+        for files in request.files:
+            print(files, request.files[files])
+        image1 = request.files['image1']
+        image2 = request.files['image2']
+        image3 = request.files['image3']
         
-        try:
-            first_img = image_directory[0]
-        except:
-            directory = os.path.join("static/room_image/", "default.png")
-            first_img = directory
-        try:
-            second_img = image_directory[1]
-        except:
-            directory = os.path.join("static/room_image/", "default.png")
-            second_img = directory
-        try:
-            third_img = image_directory[2]
-        except:
-            directory = os.path.join("static/room_image/", "default.png")
-            third_img = directory
+        
+        
+        first_img = os.path.join("static/room_image/", secure_filename(title+'_'+str(1)+".jpg"))
+        file_save_dir = os.path.join("SeMalZip_web/", first_img)
+        image1.save(file_save_dir)
+
+        second_img = os.path.join("static/room_image/", secure_filename(title+'_'+str(2)+".jpg"))
+        file_save_dir = os.path.join("SeMalZip_web/", second_img)
+        image2.save(file_save_dir)
+
+        third_img = os.path.join("static/room_image/", secure_filename(title+'_'+str(3)+".jpg"))
+        file_save_dir = os.path.join("SeMalZip_web/", third_img)
+        image3.save(file_save_dir)
+        
+
 
         new_post = Review(title=title, oneline=oneline, content=article, author=author, cat_money=cat_money, cat_easy=cat_easy, cat_safe=cat_safe, cat_space=cat_space, cat_facility=cat_facility, cat_god=cat_god, data_posted=datetime.datetime, user_id=author.id, image_source_first=first_img, image_source_second=second_img, image_source_third=third_img)
 
@@ -239,27 +233,27 @@ def signup():
         email = request.form['email']
         passw = request.form['password']
         nickname = request.form['nickname']
-        print(name, email, passw, nickname)
-        # is_profile_set = request.form.get('is_profile_set')
-        # if is_profile_set is None :
-        #     profile_image = "default.png"
-            
-        # else :
-        #     profile_image = name + ".png"
+     
+    new_user = User(username=name, email=email, password=passw, nickname=nickname)
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except :
+        db.session.rollback()
+    return redirect(url_for('home'))
 
-        # path = os.path.join("static/profile_image/", profile_image)
+@app.route('/chat')
+def chat():
+    return render_template('chat.html')
 
-        # if is_profile_set is not None :
-        #     shutil.copyfile(
-        #     os.path.join("flask_study/static/profile_image/", "temp_profile.png"),  
-        #     "flask_study/" + path)
-        
-        
+@app.route('/sessions')
+def sessions():
+    return render_template('chat.html')
 
-        new_user = User(username=name, email=email, password=passw, nickname=nickname)
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-        except :
-            db.session.rollback()
-        return redirect(url_for('home'))
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
+
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)

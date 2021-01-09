@@ -1,5 +1,66 @@
- {% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} {% block content %}
+<section class="mini" id="work-process">
+    <div class="mini-content">
+        <div class="container">
+            <div class="row">
+                <div class="offset-lg-3 col-lg-6">
+                    <div class="info">
+                        <h1></h1>
+                        <form id="contact" action="/search" method="get">
+                        </form>
+                    </div>
+                </div>
+            </div>
 
+            <!-- ***** Mini Box Start ***** -->
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="/search?cat=money" class="mini-box">
+                        <i><img src="../static/images/work-process-item-01.png" alt=""></i>
+                        <strong>가성비주의</strong>
+                        <span>우헿헤헿헹 저는 돈이 없어요ㅠㅠ</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="/search?cat=easy" class="mini-box">
+                        <i><img src="../static/images/work-process-item-02.png" alt=""></i>
+                        <strong>편의주의</strong>
+                        <span>집 주변에 있을 건 있어야지!</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="/search?cat=safe" class="mini-box">
+                        <i><img src="../static/images/work-process-item-03.png" alt=""></i>
+                        <strong>안전주의</strong>
+                        <span>안전한 곳에서 살고싶어요</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="/search?cat=space" class="mini-box">
+                        <i><img src="../static/images/work-process-item-04.png" alt=""></i>
+                        <strong>공간주의</strong>
+                        <span>하늘아래 모든 땅이 내 집이다</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="/search?cat=facility" class="mini-box">
+                        <i><img src="../static/images/work-process-item-05.png" alt=""></i>
+                        <strong>시설주의</strong>
+                        <span>그래도 사람 사는 집에서 살아야지</span>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                    <a href="/search?cat=god" class="mini-box">
+                        <i><img src="../static/images/work-process-item-06.png" alt=""></i>
+                        <strong>건물주주의</strong>
+                        <span>좋은 건물주님께 평생의 충성을</span>
+                    </a>
+                </div>
+            </div>
+            <!-- ***** Mini Box End ***** -->
+        </div>
+    </div>
+</section>
 
 <div class="welcome-area2" id="welcome">
 
@@ -20,7 +81,7 @@
             {% for review_item in list %}
             <!-- ***** 후기 ***** -->
             <div class="col-lg-3 col-md-12 col-sm-12 align-self-center">
-                <img src="../static/images/left-image.png" class="rounded img-fluid d-block mx-auto" alt="App">
+                <img src="{{ review_item.image_source_first }}" class="rounded img-fluid d-block mx-auto" alt="App">
             </div>
             <div class="col-lg-1"></div>
             <div class="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-top-fix">
@@ -29,7 +90,7 @@
                 </div>
                 <div class="left-text">
                     {{ review_item.content }}
-                    <li><a href="/review?review_num=1">자세히 보기</a></li>
+                    <li><a href="/review?review_num={{ review_item.id }}">자세히 보기</a></li>
                 </div>
 
             </div>
