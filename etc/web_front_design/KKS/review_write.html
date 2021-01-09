@@ -143,96 +143,115 @@
                                 </fieldset>
                             </div>
                             <!-- ***** 다음줄 ***** -->
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <fieldset>
+                                  
+                                </fieldset>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="team-item">
+                                    <div class="team-content">
+                                        <!-------------------------------------------------- 점수 차트 시작---------------------------------------------------->
+                            <canvas id="myChart" style="display:block; width:300px; height:300px;" width="100px" height="100px"></canvas>
+                            <script>
+                                var ctx = document.getElementById('myChart').getContext('2d');
+
+                                var color = Chart.helpers.color;
+                                var config = {
+                                    type: 'radar',
+                                    data: {
+                                        labels: [
+                                            '가격',
+                                            '방 크기',
+                                            '학교까지 거리',
+                                            '역까지 거리',
+                                            '생활환경',
+                                            '집주인',
+                                        ],
+                                        datasets: [{
+                                            backgroundColor: color(window.chartColors.blue).alpha(0.2).rgbString(),
+                                            borderColor: window.chartColors.blue,
+                                            pointBackgroundColor: window.chartColors.blue,
+                                            data: [
+                                                1,
+                                                2,
+                                                3,
+                                                4,
+                                                3,
+                                                3
+                                            ]
+                                        }]
+                                    },
+                                    options: {
+                                        legend: {
+                                            position: 'top',
+                                            },
+                                        title: {
+                                        },
+                                        scale: {
+                                            ticks: {
+                                                suggestedMin: 0,
+                                                suggestedMax: 5
+                                            }
+                                        }
+                                    }
+                                };
+
+                                window.onload = function() {
+                                    window.myRadar = new Chart(ctx, config);
+                                };
+                            </script>
+                            <!-------------------------------------------------- 점수 차트 끝---------------------------------------------------->
+                            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="team-item">
+                                    <div class="team-content">
+                                        <div class='starrr' id='star1'>가격         </div>
+                                        <span class='your-choice-was1' style='display: none;'></span>
+                                        <span class='choice1'></span><br/>
+  
+                                        <div class='starrr' id='star2'>방 크기      </div>
+                                        <span class='your-choice-was2' style='display: none;'></span>
+                                        <span class='choice2'></span><br/>
+  
+                                        <div class='starrr' id='star3'>학교까지 거리 </div>
+                                        <span class='your-choice-was3' style='display: none;'></span>
+                                        <span class='choice3'></span><br/>
+  
+                                        <div class='starrr' id='star4'>역까지 거리  </div>
+                                        <span class='your-choice-was4' style='display: none;'></span>
+                                        <span class='choice4'></span><br/>
+  
+                                        <div class='starrr' id='star5'>생활환경    </div>
+                                        <span class='your-choice-was5' style='display: none;'></span>
+                                        <span class='choice5'></span><br/>
+  
+                                        <div class='starrr' id='star6'>집주인      </div>
+                                        <span class='your-choice-was6' style='display: none;'></span>
+                                        <span class='choice6'></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- ***** 다음줄 ***** -->
                             <div class="col-lg-12">
                               <fieldset>
                                 <button type="submit" id="form-submit" class="main-button mb-5">작성하기</button>
                               </fieldset>
                             </div>
 
-                            <!-- ***** 차트 시작 ***** -->
-                            <div class="col-lg-4 col-md-12 col-sm-12">
-                               
-                              <canvas id="myChart" style="display:block; width:300px; height:300px;" width="100px" height="100px"></canvas>
-                              <script>
-                                  var ctx = document.getElementById('myChart').getContext('2d');
-                          
-                                  var randomScalingFactor = function() {
-                                      return Math.round(Math.random() * 100);
-                                  };
-                          
-                                  var color = Chart.helpers.color;
-                                  var config = {
-                                      type: 'radar',
-                                      data: {
-                                          labels: [
-                                              ['Eating', 'Dinner'],
-                                              ['Drinking', 'Water'], 'Sleeping', ['Designing', 'Graphics'], 'Coding', 'Cycling', 'Running'
-                                          ],
-                                          datasets: [{
-                                              label: 'My First dataset',
-                                              backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
-                                              borderColor: window.chartColors.red,
-                                              pointBackgroundColor: window.chartColors.red,
-                                              data: [
-                                                  randomScalingFactor(),
-                                                  randomScalingFactor(),
-                                                  randomScalingFactor(),
-                                                  randomScalingFactor(),
-                                                  randomScalingFactor(),
-                                                  randomScalingFactor(),
-                                                  randomScalingFactor()
-                                              ]
-                                          }]
-                                      },
-                                      options: {
-                                          legend: {
-                                              position: 'top',
-                                          },
-                                          title: {
-                                              display: true,
-                                              text: 'Chart.js Radar Chart'
-                                          },
-                                          scale: {
-                                              ticks: {
-                                                  beginAtZero: true
-                                              }
-                                          }
-                                      }
-                                  };
-                          
-                                  window.onload = function() {
-                                      window.myRadar = new Chart(ctx, config);
-                                  };
-                              </script>
+                            
+                             
                    </div>
                 <!-- ***** 차트 끝 ***** -->
                 <!-- ***** 별 시작 ***** -->
                 <div class="col-lg-8 col-md-12 col-sm-12">                      
 <div class="container">
 
-  <div class='starrr' id='star1'></div>
-  <span class='your-choice-was1' style='display: none;'></span>
-  <span class='choice1'></span><br/>
   
-  <div class='starrr' id='star2'></div>
-  <span class='your-choice-was2' style='display: none;'></span>
-  <span class='choice2'></span><br/>
-  
-  <div class='starrr' id='star3'></div>
-  <span class='your-choice-was3' style='display: none;'></span>
-  <span class='choice3'></span><br/>
-  
-  <div class='starrr' id='star4'></div>
-  <span class='your-choice-was4' style='display: none;'></span>
-  <span class='choice4'></span><br/>
-  
-  <div class='starrr' id='star5'></div>
-  <span class='your-choice-was5' style='display: none;'></span>
-  <span class='choice5'></span><br/>
-  
-  <div class='starrr' id='star6'></div>
-  <span class='your-choice-was6' style='display: none;'></span>
-  <span class='choice6'></span>
   <br/>
   
       </span>
