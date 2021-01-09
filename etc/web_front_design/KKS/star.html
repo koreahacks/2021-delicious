@@ -1,0 +1,148 @@
+<!doctype html>
+<head>
+  <title>Starrr, for jQuery</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="dist/starrr.css">
+  <link rel="stylesheet" href="star.css">
+</head>
+<body>
+
+<div class="container">
+
+<div class='starrr' id='star1'></div>
+<span class='your-choice-was1' style='display: none;'></span>
+<span class='choice1'></span><br/>
+
+<div class='starrr' id='star2'></div>
+<span class='your-choice-was2' style='display: none;'></span>
+<span class='choice2'></span><br/>
+
+<div class='starrr' id='star3'></div>
+<span class='your-choice-was3' style='display: none;'></span>
+<span class='choice3'></span><br/>
+
+<div class='starrr' id='star4'></div>
+<span class='your-choice-was4' style='display: none;'></span>
+<span class='choice4'></span><br/>
+
+<div class='starrr' id='star5'></div>
+<span class='your-choice-was5' style='display: none;'></span>
+<span class='choice5'></span><br/>
+
+<div class='starrr' id='star6'></div>
+<span class='your-choice-was6' style='display: none;'></span>
+<span class='choice6'></span>
+<br/>
+
+    </span>
+    
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+  <script src="dist/starrr.js"></script>
+  
+  <script>
+  //   num= 0;
+  //   while(num<7){
+  //     num++
+  //   $('#star'+num).starrr({
+  //     change: function(e, value){
+  //       if (value) {
+  //         $('.your-choice-was'+num).show();
+  //        x= $('.choice'+num).text(value);
+  //        console.log(x)
+  //        num++
+  //       } else {
+  //         $('.your-choice-was'+num).hide();
+  //       }
+  //     }
+  //   });
+  // }
+  $('#star1').starrr({
+       change: function(e, value){
+        if (value) {
+           $('.your-choice-was1').show();
+          $('.choice1').text(value);
+          
+          v1=value
+          return v1
+        } else {
+         $('.your-choice-was1').hide();
+       } 
+      
+  
+       }
+      
+   });
+
+    $('#star2').starrr({
+       change: function(e, value){
+        if (value) {
+           $('.your-choice-was2').show();
+          $('.choice2').text(value);
+          v2=value
+        } else {
+         $('.your-choice-was2').hide();
+       }
+       return v2
+       }
+   });
+
+   $('#star3').starrr({
+       change: function(e, value){
+        if (value) {
+           $('.your-choice-was3').show();
+           $('.choice3').text(value);
+           v3=value
+        } else {
+         $('.your-choice-was3').hide();
+       }
+       return v3
+       }
+   });
+
+   $('#star4').starrr({
+       change: function(e, value){
+        if (value) {
+           $('.your-choice-was4').show();
+           $('.choice4').text(value);
+           v4=value
+        } else {
+         $('.your-choice-was4').hide();
+       }
+       return v4
+       }
+   });
+
+   $('#star5').starrr({
+       change: function(e, value){
+        if (value) {
+           $('.your-choice-was5').show();
+            $('.choice5').text(value);
+            v5=value
+       
+        } else {
+         $('.your-choice-was5').hide();
+       }
+       return v5
+       }
+   });
+
+   $('#star6').starrr({
+       change: function(e, value){
+        if (value) {
+           $('.your-choice-was6').show();
+           $('.choice6').text(value);
+           v6=value
+        } else {
+         $('.your-choice-was6').hide();
+       }
+       return v6
+       }
+   });
+  
+
+  </script>
+
+</body>
+</html>
