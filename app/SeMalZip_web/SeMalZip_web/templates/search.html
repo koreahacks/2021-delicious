@@ -17,6 +17,7 @@
 <section class="section padding-top-70 padding-bottom-0" id="features">
     <div class="container">
         <div class="row">
+            {% for review_item in list %}
             <!-- ***** 후기 ***** -->
             <div class="col-lg-3 col-md-12 col-sm-12 align-self-center">
                 <img src="../static/images/left-image.png" class="rounded img-fluid d-block mx-auto" alt="App">
@@ -24,37 +25,18 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-top-fix">
                 <div class="left-heading">
-                    <h2 class="section-title">8시 59분 기상 1교시 등교 개꿀</h2>
+                    <h2 class="section-title">{{ review_item.title }}</h2>
                 </div>
                 <div class="left-text">
-                    <p>그냥 나오면 학교임ㅋㅋㅋ</p>
-                    <p>진짜 위치 하나는 개좋은듯 단점이라면 학교 가까운 만큼 소음 쫌 았는데 노상관</p>
-                    <li><a href="#">자세히 보기</a></li>
+                    {{ review_item.content }}
+                    <li><a href="/review?review_num=1">자세히 보기</a></li>
                 </div>
 
             </div>
             <div class="col-lg-12">
                 <br>
             </div>
-            <!-- ***** 후기 ***** -->
-            <div class="col-lg-3 col-md-12 col-sm-12 align-self-center">
-                <img src="../static/images/left-image.png" class="rounded img-fluid d-block mx-auto" alt="App">
-            </div>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-6 col-md-12 col-sm-12 align-self-center mobile-top-fix">
-                <div class="left-heading">
-                    <h2 class="section-title">여기 바선생님 나옵니다</h2>
-                </div>
-                <div class="left-text">
-                    <p>제가 군대에 있을때 식당에서 쥐를 봤는데 그 쥐보다 큰 바선생님을 여기서 봤습니다.</p>
-                    <p>건물이랑 내부 보면 깔끔하고 좋은것 같지만 뭔가 문제가 있나 봅니다. 바선생님 너무 자주 출몰합니다...</p>
-                    <li><a href="#">자세히 보기</a></li>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <br>
-            </div>
-            <!-- ***** 후기 ***** -->
+            {% endfor %}
 
         </div>
         <div class="row">

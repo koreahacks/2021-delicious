@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>review</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/editpost.css">
+</head>
+
+<body>
+    <div id="form_wrapper">
+        <form action="/editpost" method="POST">
+            <input type="file" name="image" multiple="multiple">
+            <input type="text" name="title">
+            <textarea name="article">
+            </textarea>
+            <legend>가성비</legend>
+            <input type="radio" name="cat_money" value="1">
+            <input type="radio" name="cat_money" value="2">
+            <input type="radio" name="cat_money" value="3">
+            <input type="radio" name="cat_money" value="4">
+            <input type="radio" name="cat_money" value="5">
+            <legend>편의시설</legend>
+            <input type="radio" name="cat_easy" value="1">
+            <input type="radio" name="cat_easy" value="2">
+            <input type="radio" name="cat_easy" value="3">
+            <input type="radio" name="cat_easy" value="4">
+            <input type="radio" name="cat_easy" value="5">
+            <legend>안전</legend>
+            <input type="radio" name="cat_safe" value="1">
+            <input type="radio" name="cat_safe" value="2">
+            <input type="radio" name="cat_safe" value="3">
+            <input type="radio" name="cat_safe" value="4">
+            <input type="radio" name="cat_safe" value="5">
+            <legend>넓이</legend>
+            <input type="radio" name="cat_space" value="1">
+            <input type="radio" name="cat_space" value="2">
+            <input type="radio" name="cat_space" value="3">
+            <input type="radio" name="cat_space" value="4">
+            <input type="radio" name="cat_space" value="5">
+            <legend>내부시설</legend>
+            <input type="radio" name="cat_facility" value="1">
+            <input type="radio" name="cat_facility" value="2">
+            <input type="radio" name="cat_facility" value="3">
+            <input type="radio" name="cat_facility" value="4">
+            <input type="radio" name="cat_facility" value="5">
+            <legend>집주인</legend>
+            <input type="radio" name="cat_god" value="1">
+            <input type="radio" name="cat_god" value="2">
+            <input type="radio" name="cat_god" value="3">
+            <input type="radio" name="cat_god" value="4">
+            <input type="radio" name="cat_god" value="5">
+            <br>
+            <button type="submit">작성하기</button>
+        </form>
+    </div>
+</body>
+
+</html>

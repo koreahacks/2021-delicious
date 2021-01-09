@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect, session
 from bs4 import BeautifulSoup
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from SeMalZip_web import namespace
@@ -32,7 +33,7 @@ class User(db.Model):
     nickname = db.Column(db.String(100), nullable=False)
     # profile_image = db.Column(db.String(100), default=os.path.join(UPLOAD_DIR, 'default.png'))
 
-    posts = db.relationship('Review', backref='author', lazy=True)
+    reviews = db.relationship('Review', backref='author', lazy=True)
 
     def __init__(self, username, email, password, nickname, **kwargs):
         self.username = username
@@ -57,15 +58,28 @@ class Review(db.Model):
     date_posted = db.Column(db.DateTime, default=datetime.datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
-    radial_data = db.Column(db.String(120))
+    cat_money = db.Column(db.Integer)
+    cat_easy = db.Column(db.Integer)
+    cat_safe = db.Column(db.Integer)
+    cat_space = db.Column(db.Integer)
+    cat_facility = db.Column(db.Integer)
+    cat_god = db.Column(db.Integer)
+
     image_data = db.Column(db.String(256))
 
-    def __init__(self, title, content, data_posted, user_id, radial_data, image_data, **kwargs):
+    def __init__(self, title, content, data_posted, user_id, cat_money, cat_easy, cat_safe, cat_space, cat_facility, cat_god, image_data, **kwargs):
         self.title = title
         self.content = content
         self.data_posted = data_posted
         self.user_id = user_id
-        self.radial_data = radial_data
+        
+        self.cat_money = cat_money
+        self.cat_easy = cat_easy
+        self.cat_safe = cat_safe
+        self.cat_space = cat_space
+        self.cat_facility = cat_facility
+        self.cat_god = cat_god
+
         self.image_data = image_data
 
     def __repr__(self):
@@ -79,7 +93,27 @@ def home():
 
 @app.route("/search")
 def search():
-    return render_template('search.html')
+    review_list = Review.query.all()
+    category = request.args.get("cat", "keyword")
+    if category is "money":
+        review_list = Review.query.order_by(Review.cat_money.desc())
+    elif category is "easy" :
+        review_list = Review.query.order_by(Review.cat_easy.desc())
+    elif category is "safe" :
+        review_list = Review.query.order_by(Review.cat_safe.desc())
+    elif category is "space" :
+        review_list = Review.query.order_by(Review.cat_space.desc())
+    elif category is "facility" :
+        review_list = Review.query.order_by(Review.cat_facility.desc())
+    elif category is "god" :
+        review_list = Review.query.order_by(Review.cat_god.desc())
+    return render_template('search.html', list=review_list)
+
+@app.route("/review")
+def review():
+    review_index = request.args.get('review_num', "0")
+    review_article = Review.query.filter_by(id=review_index).first()
+    return render_template('review.html', rindex=review_index, rarticle=review_article)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -93,6 +127,7 @@ def login():
         print(data, User.check_password(data, data.password))
         if User.check_password(data, password) is True:
             session['logged_in'] = True
+            session['username'] = username
             print('login success')
             return redirect(url_for('home'))
         else:
@@ -129,22 +164,37 @@ def logout():
 def editor():
     return render_template('editor.html')
 
-@app.route('/edit_post', methods=['GET','POST'])
+@app.route('/editpost', methods=['GET','POST'])
 def edit_post():
-    user_email = session['user_email']
-    title = request.form['title']
-    article = request.form['article']
+    if request.method == "GET" :
+        return render_template('editpost.html')
+    else:
+        username = session['username']
+        title = request.form['title']
+        article = request.form['article']
 
-    author = User.query.filter_by(email=user_email).first()
-    
-    new_post = Review(title=title, content=article, author=author)
+        cat_money = request.form['cat_money']
+        cat_easy = request.form['cat_easy']
+        cat_safe = request.form['cat_safe']
+        cat_facility = request.form['cat_facility']
+        cat_space = request.form['cat_space']
+        cat_god = request.form['cat_god']
 
-    try: 
-        db.session.add(new_post)
-        db.session.commit()
-    except:
-        db.session().rollback()
-    return redirect(url_for('home'))
+        author = User.query.filter_by(username=username).first()
+        image_data=""
+        uploaded_image = request.files.getlist("image")
+        for image in uploaded_image :
+            f = image
+            f.save(secure_filename(f.filename))
+            image_data += f.filename+", " 
+        new_post = Review(title=title, content=article, author=author, cat_money=cat_money, cat_easy=cat_easy, cat_safe=cat_safe, cat_space=cat_space, cat_facility=cat_facility, cat_god=cat_god, image_data=image_data, data_posted=datetime.datetime, user_id=author.id)
+
+        try: 
+            db.session.add(new_post)
+            db.session.commit()
+        except:
+            db.session().rollback()
+        return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

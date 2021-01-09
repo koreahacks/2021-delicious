@@ -33,10 +33,11 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="#welcome" class="active">홈</a></li>
-                        <li><a href="#work-process">후기 찾아보기</a></li>
+                        <li><a href="/search">후기 찾아보기</a></li>
                         <li><a href="#blog">인기 후기</a></li>
 
                         {% if session['logged_in'] == True %}
+                        <li><a href="/editpost">후기 쓰기</a></li>
                         <li><a href="/mypage">마이페이지</a></li>
                         <li><a href="/logout">로그아웃</a></li>
                         {% else %}
